@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 
+// Props interface for the page component, including optional page parameter from URL
 interface SciFiMoviesPageProps {
   searchParams: {
     page?: string;
@@ -12,26 +13,28 @@ interface SciFiMoviesPageProps {
 export default async function SciFiMoviesPage({
   searchParams,
 }: SciFiMoviesPageProps) {
+  // Initialize pagination variables with default values
   const currentPage = Number(searchParams.page) || 1;
   const moviesPerPage = 12;
 
-  // Get sci-fi movies (genre ID 878) with pagination
+  // Fetch paginated sci-fi movies from the database
+  // Genre ID 878 represents Science Fiction in TMDB classification
   const movies = await prisma.movie.findMany({
     where: {
       genres: {
         some: {
-          genreId: 878, // Science Fiction genre ID
+          genreId: 878,
         },
       },
     },
     skip: (currentPage - 1) * moviesPerPage,
     take: moviesPerPage,
     orderBy: {
-      releaseDate: 'desc',
+      releaseDate: 'desc', // Show newest movies first
     },
   });
 
-  // Get total count for pagination
+  // Get total count for pagination calculations
   const totalMovies = await prisma.movie.count({
     where: {
       genres: {
@@ -42,6 +45,7 @@ export default async function SciFiMoviesPage({
     },
   });
 
+  // Calculate total pages needed for pagination
   const totalPages = Math.ceil(totalMovies / moviesPerPage);
 
   return (
@@ -57,7 +61,11 @@ export default async function SciFiMoviesPage({
           ))}
         </div>
 
-        {/* Pagination */}
+        {/* Pagination Controls:
+            - Show Previous button if not on first page
+            - Display current page and total pages
+            - Show Next button if not on last page 
+        */}
         <div className="flex justify-center gap-2">
           {currentPage > 1 && (
             <Link href={`/sci-fi-movies?page=${currentPage - 1}`}>
@@ -65,6 +73,7 @@ export default async function SciFiMoviesPage({
             </Link>
           )}
 
+          {/* Current page indicator */}
           <span className="flex items-center px-4 py-2 bg-gray-800 text-white rounded">
             Page {currentPage} of {totalPages}
           </span>

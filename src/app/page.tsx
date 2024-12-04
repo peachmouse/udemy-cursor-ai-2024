@@ -11,9 +11,15 @@ import {
 } from '@/components/ui/card';
 import heroImage from './hero-image.png';
 
+/**
+ * LandingPage: Main landing page component for SciFi Flix streaming service
+ * Implements a responsive design with mobile-first approach using Tailwind CSS
+ */
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Navigation Header 
+          Fixed position header with main navigation links and branding */}
       <header className="bg-gray-900 text-white">
         <div className="container mx-auto px-4 py-6 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold">
@@ -47,8 +53,11 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow">
+        {/* Hero Section
+            Features main value proposition and CTA with responsive layout */}
         <section className="bg-gray-800 text-white py-20">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            {/* Left column: Text content and CTA button */}
             <div className="md:w-1/2 mb-10 md:mb-0">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
                 Explore the Universe of Sci-Fi
@@ -63,6 +72,8 @@ export default function LandingPage() {
                 </Button>
               </Link>
             </div>
+            {/* Right column: Hero image 
+                Uses Next.js Image component for optimal loading */}
             <div className="md:w-1/2">
               <Image
                 src={heroImage}
@@ -75,12 +86,17 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Pricing Section
+            Displays three-tier pricing structure using Shadcn UI Cards
+            Middle card (Pro) is highlighted with scaling and border */}
         <section className="py-20 bg-gray-100">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">
               Choose Your Galactic Plan
             </h2>
+            {/* Responsive grid layout: 1 column on mobile, 3 columns on desktop */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Basic Plan Card */}
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>Basic</CardTitle>
@@ -98,6 +114,8 @@ export default function LandingPage() {
                   <Button className="w-full">Choose Basic</Button>
                 </CardFooter>
               </Card>
+
+              {/* Pro Plan Card - Featured tier with visual emphasis */}
               <Card className="border-4 border-blue-500 transform scale-105 flex flex-col">
                 <CardHeader>
                   <CardTitle>Pro</CardTitle>
@@ -118,6 +136,8 @@ export default function LandingPage() {
                   </Button>
                 </CardFooter>
               </Card>
+
+              {/* Ultimate Plan Card */}
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>Ultimate</CardTitle>
@@ -142,6 +162,8 @@ export default function LandingPage() {
         </section>
       </main>
 
+      {/* Footer Section
+          Contains copyright information and attribution to TMDB */}
       <footer className="bg-gray-900 text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p>© 2023 SciFi Flix. All rights reserved.</p>
