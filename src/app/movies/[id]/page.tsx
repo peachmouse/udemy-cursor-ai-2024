@@ -54,7 +54,12 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
             {/* Movie Details */}
             <div className="w-full md:w-2/3 lg:w-3/4 text-white">
-              <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
+              <div className="flex justify-between items-start mb-4">
+                <h1 className="text-4xl font-bold">{movie.title}</h1>
+                <Link href={`/movies/${movie.id}/edit`}>
+                  <Button variant="outline">Edit Movie</Button>
+                </Link>
+              </div>
 
               <div className="flex items-center gap-4 mb-6">
                 <span className="flex items-center">
