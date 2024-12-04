@@ -1,0 +1,122 @@
+You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI and Tailwind.
+
+Code Style and Structure
+
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+
+Naming Conventions
+
+- Use lowercase with dashes for directories (e.g., components/auth-wizard).
+- Favor named exports for components.
+
+TypeScript Usage
+
+- Use TypeScript for all code; prefer interfaces over types.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript interfaces.
+
+Syntax and Formatting
+
+- Use the "function" keyword for pure functions.
+- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
+- Use declarative JSX.
+
+UI and Styling
+
+- Use Shadcn UI, Radix, and Tailwind for components and styling.
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+
+Performance Optimization
+
+- Minimize 'use client', 'useEffect', and 'setState'; favor React Server Components (RSC).
+- Wrap client components in Suspense with fallback.
+- Use dynamic loading for non-critical components.
+- Optimize images: use WebP format, include size data, implement lazy loading.
+
+Key Conventions
+
+- Use 'nuqs' for URL search parameter state management.
+- Optimize Web Vitals (LCP, CLS, FID).
+- Limit 'use client':
+  - Favor server components and Next.js SSR.
+  - Use only for Web API access in small components.
+  - Avoid for data fetching or state management.
+
+Follow Next.js docs for Data Fetching, Rendering, and Routing.
+
+Prisma Integration
+
+- Follow Prisma best practices([1](https://www.prisma.io/docs/orm/prisma-migrate/workflows/team-development)):
+  - Place Prisma schema in `src/prisma/schema.prisma`
+  - Commit both schema and migrations to source control
+  - Create a singleton PrismaClient instance:
+
+```typescript:src/lib/prisma.ts
+import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+}
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+
+```
+
+- Use React Server Components for database queries
+- Avoid instantiating PrismaClient in API routes
+- Add Prisma monorepo plugin for Next.js([2](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-monorepo)):
+
+```typescript:next.config.mjs
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
+
+const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()]
+    }
+    return config
+  }
+}
+```
+
+This addition emphasizes key Prisma best practices including:
+
+- Proper PrismaClient instantiation to avoid hot reload issues
+- Source control requirements for schema and migrations
+- Monorepo setup considerations
+- Server component integration
+- File structure conventions
+
+The singleton pattern for PrismaClient is especially important in Next.js to prevent connection issues during development.
+
+Project Structure
+
+- Use the Next.js `src` directory pattern([1](https://nextjs.org/docs/canary/app/building-your-application/configuring/src-directory)) for better code organization:
+  - Place application code under `src/`
+  - Move special Next.js folders to `src/app` or `src/pages`
+  - Keep configuration files in root:
+    - `package.json`
+    - `next.config.mjs`
+    - `tsconfig.json`
+    - `.env.*`
+  - Structure application folders within `src/`:
+    - `src/components/`
+    - `src/lib/`
+    - `src/styles/`
+    - `src/types/`
+  - Update Tailwind content paths in `tailwind.config.ts`:
+
+```typescript:tailwind.config.ts
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  // ... rest of config
+}
+```
