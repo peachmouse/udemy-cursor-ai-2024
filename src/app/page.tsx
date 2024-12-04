@@ -22,12 +22,12 @@ export default function LandingPage() {
           <nav>
             <ul className="flex space-x-4">
               <li>
-                <Link href="#" className="hover:text-gray-300">
+                <Link href="/" className="hover:text-gray-300">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-gray-300">
+                <Link href="/sci-fi-movies" className="hover:text-gray-300">
                   Movies
                 </Link>
               </li>
@@ -57,9 +57,11 @@ export default function LandingPage() {
                 Discover and stream the best science fiction movies from across
                 the galaxy.
               </p>
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Start Watching Now
-              </Button>
+              <Link href="/sci-fi-movies">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+                  Browse SciFi Movies
+                </Button>
+              </Link>
             </div>
             <div className="md:w-1/2">
               <Image
