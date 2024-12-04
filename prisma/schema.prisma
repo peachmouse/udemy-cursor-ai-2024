@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Movie {
+  id            Int      @id
+  title         String
+  overview      String
+  posterPath    String
+  backdropPath  String
+  releaseDate   DateTime
+  popularity    Float
+  voteAverage   Float
+  voteCount     Int
+  genres        GenresOnMovies[]
+  actors        ActorsOnMovies[]
+  directors     DirectorsOnMovies[]
+}
+
+model Actor {
+  id     Int      @id
+  name   String
+  movies ActorsOnMovies[]
+}
+
+model Director {
+  id     Int      @id
+  name   String
+  movies DirectorsOnMovies[]
+}
+
+model Genre {
+  id     Int      @id
+  name   String
+  movies GenresOnMovies[]
+}
+
+model ActorsOnMovies {
+  movie    Movie   @relation(fields: [movieId], references: [id])
+  movieId  Int
+  actor    Actor   @relation(fields: [actorId], references: [id])
+  actorId  Int
+
+  @@id([movieId, actorId])
+}
+
+model DirectorsOnMovies {
+  movie      Movie     @relation(fields: [movieId], references: [id])
+  movieId    Int
+  director   Director  @relation(fields: [directorId], references: [id])
+  directorId Int
+
+  @@id([movieId, directorId])
+}
+
+model GenresOnMovies {
+  movie    Movie   @relation(fields: [movieId], references: [id])
+  movieId  Int
+  genre    Genre   @relation(fields: [genreId], references: [id])
+  genreId  Int
+
+  @@id([movieId, genreId])
+} 
