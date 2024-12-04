@@ -1,7 +1,10 @@
 import { MovieCard } from '@/components/MovieCard';
 import { Button } from '@/components/ui/button';
-import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
+import {
+  getPaginatedSciFiMovies,
+  getSciFiMoviesCount,
+} from '@/services/movies';
 
 // Props interface for the page component, including optional page parameter from URL
 interface SciFiMoviesPageProps {
@@ -17,33 +20,11 @@ export default async function SciFiMoviesPage({
   const currentPage = Number(searchParams.page) || 1;
   const moviesPerPage = 12;
 
-  // Fetch paginated sci-fi movies from the database
-  // Genre ID 878 represents Science Fiction in TMDB classification
-  const movies = await prisma.movie.findMany({
-    where: {
-      genres: {
-        some: {
-          genreId: 878,
-        },
-      },
-    },
-    skip: (currentPage - 1) * moviesPerPage,
-    take: moviesPerPage,
-    orderBy: {
-      releaseDate: 'desc', // Show newest movies first
-    },
-  });
-
-  // Get total count for pagination calculations
-  const totalMovies = await prisma.movie.count({
-    where: {
-      genres: {
-        some: {
-          genreId: 878,
-        },
-      },
-    },
-  });
+  // Use the service functions instead of direct Prisma queries
+  const [movies, totalMovies] = await Promise.all([
+    getPaginatedSciFiMovies(currentPage, moviesPerPage),
+    getSciFiMoviesCount(),
+  ]);
 
   // Calculate total pages needed for pagination
   const totalPages = Math.ceil(totalMovies / moviesPerPage);

@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
-import { Movie } from '@/types/movie';
-
+import { Movie } from '@prisma/client';
 interface MovieCardProps {
   movie: Movie;
 }
