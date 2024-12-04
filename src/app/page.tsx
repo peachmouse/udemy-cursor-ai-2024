@@ -79,7 +79,7 @@ export default function LandingPage() {
               Choose Your Galactic Plan
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card>
+              <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>Basic</CardTitle>
                   <CardDescription>For casual explorers</CardDescription>
@@ -92,11 +92,11 @@ export default function LandingPage() {
                     <li>✓ 100 movies/month</li>
                   </ul>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="mt-auto">
                   <Button className="w-full">Choose Basic</Button>
                 </CardFooter>
               </Card>
-              <Card className="border-4 border-blue-500 transform scale-105">
+              <Card className="border-4 border-blue-500 transform scale-105 flex flex-col">
                 <CardHeader>
                   <CardTitle>Pro</CardTitle>
                   <CardDescription>For serious sci-fi fans</CardDescription>
@@ -110,13 +110,13 @@ export default function LandingPage() {
                     <li>✓ Exclusive behind-the-scenes</li>
                   </ul>
                 </CardContent>
-                <CardFooter>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                <CardFooter className="mt-auto">
+                  <Button className="w-full bg-red-600 hover:bg-red-700">
                     Choose Pro
                   </Button>
                 </CardFooter>
               </Card>
-              <Card>
+              <Card className="flex flex-col">
                 <CardHeader>
                   <CardTitle>Ultimate</CardTitle>
                   <CardDescription>For the true space opera</CardDescription>
@@ -131,7 +131,7 @@ export default function LandingPage() {
                     <li>✓ Offline viewing</li>
                   </ul>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="mt-auto">
                   <Button className="w-full">Choose Ultimate</Button>
                 </CardFooter>
               </Card>
