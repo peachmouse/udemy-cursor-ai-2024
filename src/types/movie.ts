@@ -10,3 +10,18 @@ export interface Movie {
   voteCount: number;
   genreIds: number[];
 }
+
+export interface MovieDetails extends Movie {
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  actors: {
+    id: number;
+    name: string;
+  }[];
+  directors: {
+    id: number;
+    name: string;
+  }[];
+}
