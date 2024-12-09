@@ -51,7 +51,7 @@ Follow Next.js docs for Data Fetching, Rendering, and Routing.
 Prisma Integration
 
 - Follow Prisma best practices([1](https://www.prisma.io/docs/orm/prisma-migrate/workflows/team-development)):
-  - Place Prisma schema in `src/prisma/schema.prisma`
+  - Place Prisma schema in `prisma/schema.prisma`
   - Commit both schema and migrations to source control
   - Create a singleton PrismaClient instance:
 
