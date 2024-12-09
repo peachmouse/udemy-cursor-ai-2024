@@ -20,6 +20,11 @@ export function Header() {
               </Link>
             </li>
             <li>
+              <Link href="/actors" className="hover:text-gray-300">
+                Actors
+              </Link>
+            </li>
+            <li>
               <Link href="#" className="hover:text-gray-300">
                 About
               </Link>
