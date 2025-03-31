@@ -1,0 +1,51 @@
+---
+description: Prisma best practices
+globs: 
+alwaysApply: false
+---
+# Prisma Integration
+
+- Follow Prisma best practices([1](mdc:https:/www.prisma.io/docs/orm/prisma-migrate/workflows/team-development)):
+  - Place Prisma schema in `prisma/schema.prisma`
+  - Commit both schema and migrations to source control
+  - Create a singleton PrismaClient instance:
+
+```typescript:src/lib/prisma.ts
+import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
+}
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient()
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+
+```
+
+- Use React Server Components for database queries
+- Avoid instantiating PrismaClient in API routes
+- Add Prisma monorepo plugin for Next.js([2](mdc:https:/www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-monorepo)):
+
+```typescript:next.config.mjs
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
+
+const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()]
+    }
+    return config
+  }
+}
+```
+
+This addition emphasizes key Prisma best practices including:
+
+- Proper PrismaClient instantiation to avoid hot reload issues
+- Source control requirements for schema and migrations
+- Monorepo setup considerations
+- Server component integration
+- File structure conventions
+
+The singleton pattern for PrismaClient is especially important in Next.js to prevent connection issues during development.
