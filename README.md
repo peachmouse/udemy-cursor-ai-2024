@@ -82,3 +82,47 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Stripe Configuration Instructions
+
+1. **Create a Stripe Account**:
+
+   - Sign up at [stripe.com](https://stripe.com) if you don't have an account
+
+2. **Get API Keys**:
+
+   - Go to Developers > API keys in your Stripe Dashboard
+   - Copy your **Publishable key** and **Secret key**
+   - Add these to your `.env.local` file:
+     ```
+     STRIPE_SECRET_KEY=sk_test_...
+     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+     ```
+
+3. **Create Products and Pricing Plans**:
+
+   - Go to Products > Add Product in your Stripe Dashboard
+   - Create the following products with recurring prices:
+     - Basic Plan: €9.99/month
+     - Pro Plan: €14.99/month
+     - Ultimate Plan: €19.99/month
+   - For each product, set a recurring price with monthly billing
+   - Copy the **Price ID** for each plan (starts with "price\_")
+   - Add these IDs to your `.env.local` file:
+     ```
+     STRIPE_PRICE_BASIC=price_...
+     STRIPE_PRICE_PRO=price_...
+     STRIPE_PRICE_ULTIMATE=price_...
+     ```
+
+4. **Set Your Domain**:
+
+   - Add the base URL to your `.env.local` file:
+     ```
+     NEXT_PUBLIC_BASE_URL=http://localhost:3000
+     ```
+   - For production, change this to your actual domain
+
+5. **Test The Integration**:
+   - Use Stripe test cards like `4242 4242 4242 4242` with any future expiry date and any CVC
+   - Check successful payments in your Stripe Dashboard under Payments

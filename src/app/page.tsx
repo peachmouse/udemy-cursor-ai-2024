@@ -10,6 +10,7 @@ import {
   CardFooter,
 } from '@/components/ui/card';
 import heroImage from './hero-image.png';
+import StripeCheckoutButton from '@/components/StripeCheckoutButton';
 
 export default function LandingPage() {
   return (
@@ -66,7 +67,7 @@ export default function LandingPage() {
                 </ul>
               </CardContent>
               <CardFooter className="mt-auto">
-                <Button className="w-full">Choose Basic</Button>
+                <StripeCheckoutButton plan="basic" />
               </CardFooter>
             </Card>
 
@@ -86,9 +87,7 @@ export default function LandingPage() {
                 </ul>
               </CardContent>
               <CardFooter className="mt-auto">
-                <Button className="w-full bg-red-600 hover:bg-red-700">
-                  Choose Pro
-                </Button>
+                <StripeCheckoutButton plan="pro" variant="featured" />
               </CardFooter>
             </Card>
 
@@ -109,7 +108,7 @@ export default function LandingPage() {
                 </ul>
               </CardContent>
               <CardFooter className="mt-auto">
-                <Button className="w-full">Choose Ultimate</Button>
+                <StripeCheckoutButton plan="ultimate" />
               </CardFooter>
             </Card>
           </div>
